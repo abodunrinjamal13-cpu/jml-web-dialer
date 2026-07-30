@@ -85,6 +85,25 @@ body {
   display: flex;
 }
 
+/* Specific Dialer Page Adjustment to avoid floating keypad */
+#dialerPage {
+  display: none;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+#dialerPage.active-page {
+  display: flex;
+}
+
+#keypadView {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
 .section-title {
   font-size: 18px;
   color: #0f172a;
@@ -141,12 +160,12 @@ body {
   opacity: 1; 
 }
 
-/* Status Badge with Extra Bottom Gap */
+/* Status Badge */
 .status-badge {
   font-size: 12px;
   font-weight: 600;
   text-align: center;
-  margin: 6px 0 28px 0; /* Gap before the keypads start */
+  margin: 6px 0 16px 0;
   color: #16a34a;
 }
 
@@ -154,7 +173,7 @@ body {
 #keypadPage {
   display: none;
   flex-direction: column;
-  justify-content: flex-end; /* Keypad starts lower */
+  justify-content: flex-end;
   height: 100%;
 }
 
@@ -162,15 +181,15 @@ body {
   display: flex;
 }
 
-/* Keypad Grid (Fixed height & no auto-stretching) */
+/* Keypad Grid */
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 14px;
   justify-items: center;
-  margin-top: auto; /* Moves grid to the bottom space */
-  margin-bottom: 16px;
-  flex-grow: 0; /* Keeps keypads compact */
+  margin-top: auto;
+  margin-bottom: 20px;
+  flex-grow: 0;
 }
 
 .key-btn {
