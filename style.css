@@ -41,6 +41,7 @@ body {
 .brand-header {
   text-align: center;
   margin-bottom: 8px;
+  flex-shrink: 0;
 }
 .logo-row { 
   display: flex; 
@@ -85,12 +86,13 @@ body {
   display: flex;
 }
 
-/* Specific Dialer Page Adjustment to avoid floating keypad */
+/* Specific Dialer Page Layout - Forces Keypad to Bottom */
 #dialerPage {
   display: none;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: 100%;
+  flex-grow: 1;
 }
 
 #dialerPage.active-page {
@@ -101,7 +103,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  flex-grow: 1;
+  margin-top: auto;
+  width: 100%;
 }
 
 .section-title {
@@ -131,6 +134,7 @@ body {
   display: flex;
   align-items: center;
   margin-top: 8px;
+  flex-shrink: 0;
 }
 
 .display-box:focus-within {
@@ -165,31 +169,19 @@ body {
   font-size: 12px;
   font-weight: 600;
   text-align: center;
-  margin: 6px 0 16px 0;
+  margin: 6px 0 12px 0;
   color: #16a34a;
-}
-
-/* Keypad Page Layout - Pushes Keypad Area Down */
-#keypadPage {
-  display: none;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-}
-
-#keypadPage.active-page {
-  display: flex;
+  flex-shrink: 0;
 }
 
 /* Keypad Grid */
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 12px;
   justify-items: center;
-  margin-top: auto;
-  margin-bottom: 20px;
-  flex-grow: 0;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 .key-btn {
@@ -218,7 +210,8 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  width: 100%;
 }
 
 .call-circle-btn {
@@ -589,6 +582,7 @@ body {
   padding-top: 8px;
   padding-bottom: env(safe-area-inset-bottom, 4px);
   background: #ffffff;
+  flex-shrink: 0;
 }
 
 .nav-tab {
