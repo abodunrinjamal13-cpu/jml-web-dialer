@@ -1,0 +1,20 @@
+{
+  "name": "JML AGENCY Web Dialer",
+  "short_name": "JML Dialer",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#001EC7",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192/001EC7/ffffff?text=JML",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512/001EC7/ffffff?text=JML",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
