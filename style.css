@@ -1,13 +1,6 @@
-/* ==========================================================================
-   Reset & Base
-   ========================================================================== */
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -18,588 +11,578 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100dvh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  width: 100vw;
+  overflow: hidden;
 }
 
-/* ==========================================================================
-   App Shell
-   ========================================================================== */
+/* Base Responsive Container */
 .dialer-card {
-  width: 100%;
-  max-width: 414px;
-  height: 100dvh;
-  max-height: 900px;
   background: #ffffff;
-  border-radius: 28px;
+  width: 100%;
+  max-width: 420px;
+  height: 100dvh;
+  padding: 20px 16px 12px 16px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
+  justify-content: space-between;
   position: relative;
+  overflow: hidden;
 }
 
-/* On an actual phone (narrow viewport) the shell IS the screen — no floating
-   card, no dead margin around it. */
-@media (max-width: 480px) {
-  body {
-    padding: 0;
-  }
+@media (min-width: 600px) {
   .dialer-card {
-    max-height: none;
-    height: 100dvh;
-    border-radius: 0;
-    box-shadow: none;
+    height: 720px;
+    border-radius: 36px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
 }
 
-/* ==========================================================================
-   Branding Header
-   ========================================================================== */
+/* Header */
 .brand-header {
-  flex-shrink: 0;
   text-align: center;
-  padding: max(18px, env(safe-area-inset-top)) 20px 14px 20px;
-  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 8px;
+}
+.logo-row { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 8px; 
+}
+.phone-logo-icon { 
+  width: 20px; 
+  height: 20px; 
+}
+.brand-name { 
+  color: #001EC7; 
+  font-weight: 700; 
+  font-size: 16px; 
+  letter-spacing: 0.5px; 
+}
+.brand-sub { 
+  color: #64748b; 
+  font-size: 12px; 
+  margin-top: 2px; 
 }
 
-.logo-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.phone-logo-icon {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.brand-name {
-  font-size: 17px;
-  font-weight: 700;
-  color: #001EC7;
-  letter-spacing: 0.01em;
-}
-
-.brand-sub {
-  font-size: 12px;
-  font-weight: 600;
-  color: #94a3b8;
-  margin-top: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ==========================================================================
-   Page Container & Page Switching
-   ========================================================================== */
+/* Page Container */
 .page-container {
-  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  min-height: 0; /* required so children can scroll instead of overflowing */
-  overflow: hidden;
 }
 
 .app-page {
   display: none;
-  flex: 1;
-  min-height: 0;
   flex-direction: column;
-  padding: 18px 24px 14px 24px;
+  height: 100%;
+  width: 100%;
 }
 
 .app-page.active-page {
   display: flex;
 }
 
-.hidden {
-  display: none !important;
+.section-title {
+  font-size: 18px;
+  color: #0f172a;
+  margin-bottom: 14px;
 }
 
-/* ==========================================================================
-   PAGE 1 — Dialer / Keypad
-   ========================================================================== */
-.display-box {
-  flex-shrink: 0;
-  background: #f8fafc;
-  border: 1px solid #eef1f5;
+/* Import Contacts Button */
+.import-contacts-btn {
+  background: #001EC7;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
   border-radius: 16px;
-  padding: 12px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Display & Paste Box */
+.display-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  margin-top: 8px;
+}
+
+.display-box:focus-within {
+  border-color: #001EC7;
 }
 
 .display-box input {
   border: none;
   background: transparent;
-  outline: none;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: #0f172a;
   width: 100%;
-}
-
-.display-box input::placeholder {
-  font-size: 15px;
-  font-weight: 500;
-  color: #cbd5e1;
+  outline: none;
+  text-align: center;
+  color: #0f172a;
 }
 
 .paste-btn {
-  flex-shrink: 0;
+  background: none;
   border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
   cursor: pointer;
+  padding: 4px;
+  opacity: 0.7;
 }
 
+.paste-btn:hover { 
+  opacity: 1; 
+}
+
+/* Status Badge with Extra Bottom Gap */
 .status-badge {
-  flex-shrink: 0;
-  text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: #22c55e;
-  margin-bottom: 6px;
+  text-align: center;
+  margin: 6px 0 28px 0; /* Gap before the keypads start */
+  color: #16a34a;
 }
 
-/* keypadView fills all remaining space below the display/status, and
-   internally distributes the grid + call row so nothing floats in a void */
-#keypadView {
-  flex: 1;
-  min-height: 0;
-  display: flex;
+/* Keypad Page Layout - Pushes Keypad Area Down */
+#keypadPage {
+  display: none;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end; /* Keypad starts lower */
+  height: 100%;
 }
 
+#keypadPage.active-page {
+  display: flex;
+}
+
+/* Keypad Grid (Fixed height & no auto-stretching) */
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px 20px;
+  gap: 12px;
   justify-items: center;
-  align-items: center;
-  margin: auto 0;
-  padding: 6px 0;
+  margin-top: auto; /* Moves grid to the bottom space */
+  margin-bottom: 16px;
+  flex-grow: 0; /* Keeps keypads compact */
 }
 
 .key-btn {
-  width: 68px;
-  height: 68px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
   border-radius: 50%;
-  border: none;
-  background: #f1f5f9;
+  width: 64px;
+  height: 64px;
   font-size: 24px;
   font-weight: 600;
-  color: #1e293b;
+  color: #0f172a;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.12s ease;
+  transition: all 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.key-btn:active {
-  background: #e2e8f0;
-  transform: scale(0.94);
+.key-btn:active { 
+  background: #e2e8f0; 
+  transform: scale(0.95); 
 }
 
 .bottom-action-row {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 56px;
-  padding-top: 10px;
-  padding-bottom: max(12px, env(safe-area-inset-bottom) - 8px);
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .call-circle-btn {
-  width: 68px;
-  height: 68px;
+  background: #15803d;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: #22c55e;
   border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 6px 16px -4px rgba(34, 197, 94, 0.45);
-  transition: transform 0.12s ease;
-}
-
-.call-circle-btn:active {
-  transform: scale(0.94);
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
 }
 
 .backspace-icon-btn {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
+  position: absolute;
+  right: 18px;
+  background: none;
   border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 }
 
-.backspace-icon-btn:active {
-  background: #f1f5f9;
+/* In-Call Controls */
+.hidden { 
+  display: none !important; 
 }
 
-/* ==========================================================================
-   Active Call View (lives inside dialerPage, toggled via .hidden)
-   ========================================================================== */
-#activeCallView {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 0 max(10px, env(safe-area-inset-bottom)) 0;
-}
-
+/* SLEEK AVATAR & CONCENTRIC WAVE ANIMATION */
 .avatar-card {
-  position: relative;
-  width: 100%;
-  flex: 1;
-  min-height: 0;
+  background: #f8fafc;
+  border-radius: 20px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
 .avatar-circle-inner {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 86px;
+  height: 86px;
   background: #001EC7;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 30, 199, 0.25);
+}
+
+.wave-anchor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 86px;
+  height: 86px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
 }
 
-.wave-anchor {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
 .ripple-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(0, 30, 199, 0.35);
-  animation: ripple-out 2.4s ease-out infinite;
-}
-
-.ring-1 { width: 130px; height: 130px; animation-delay: 0s; }
-.ring-2 { width: 130px; height: 130px; animation-delay: 0.6s; }
-.ring-3 { width: 130px; height: 130px; animation-delay: 1.2s; }
-
-@keyframes ripple-out {
-  0%   { transform: scale(1);   opacity: 0.6; }
-  100% { transform: scale(1.9); opacity: 0; }
-}
-
-.incall-keypad {
-  flex-shrink: 0;
+  background: rgba(0, 30, 199, 0.15);
   width: 100%;
-  padding: 10px 0;
+  height: 100%;
+  animation: pulseWave 2.4s infinite ease-out;
 }
 
-.mini-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px 16px;
-  justify-items: center;
+.ring-1 { animation-delay: 0s; }
+.ring-2 { animation-delay: 0.8s; }
+.ring-3 { animation-delay: 1.6s; }
+
+@keyframes pulseWave {
+  0% { 
+    transform: scale(1); 
+    opacity: 0.8; 
+  }
+  100% { 
+    transform: scale(2.5); 
+    opacity: 0; 
+  }
 }
 
-.mini-grid button {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: #f1f5f9;
-  font-size: 19px;
-  font-weight: 600;
-  color: #1e293b;
-  cursor: pointer;
+.incall-keypad { 
+  z-index: 3; 
+  width: 100%; 
+  padding: 0 10px; 
 }
 
-.mini-grid button:active {
-  background: #e2e8f0;
+.mini-grid { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 8px; 
 }
 
-.call-controls-wrapper {
-  flex-shrink: 0;
-  width: 100%;
+.mini-grid button { 
+  background: #ffffff; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 10px; 
+  padding: 10px; 
+  font-weight: 600; 
+}
+
+.call-controls-wrapper { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+  align-items: center; 
+}
+
+.controls-top-row { 
+  display: flex; 
+  gap: 24px; 
+}
+
+.circle-icon-btn { 
+  background: #ffffff; 
+  border: 1px solid #e2e8f0; 
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  cursor: pointer; 
+}
+
+.circle-icon-btn.active { 
+  background: #e0e7ff; 
+  border-color: #001EC7; 
+}
+
+.hangup-circle-btn { 
+  background: #ef4444; 
+  width: 60px; 
+  height: 60px; 
+  border-radius: 50%; 
+  border: none; 
+  cursor: pointer; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+/* History & Contacts */
+.full-history-list, .contacts-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 18px;
-}
-
-.controls-top-row {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-}
-
-.circle-icon-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: none;
-  background: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.12s ease;
-}
-
-.circle-icon-btn:active {
-  background: #e2e8f0;
-}
-
-.circle-icon-btn.is-active {
-  background: #0f172a;
-}
-
-.circle-icon-btn.is-active svg {
-  fill: #ffffff;
-}
-
-.hangup-circle-btn {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: none;
-  background: #ef4444;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 6px 16px -4px rgba(239, 68, 68, 0.45);
-}
-
-.hangup-circle-btn:active {
-  transform: scale(0.94);
-}
-
-/* ==========================================================================
-   PAGE 2 — Call History
-   ========================================================================== */
-.section-title {
-  flex-shrink: 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 14px 0;
-}
-
-.full-history-list {
-  flex: 1;
-  min-height: 0;
+  gap: 10px;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  flex-grow: 1;
+}
+
+.history-item, .contact-item {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  padding: 12px;
+  border-radius: 14px;
 }
 
-/* ==========================================================================
-   PAGE 3 — Messages / SMS
-   ========================================================================== */
-#smsPage {
-  padding: 0;
+.contact-item { 
+  justify-content: space-between; 
 }
 
+.contact-avatar { 
+  width: 38px; 
+  height: 38px; 
+  background: #e0e7ff; 
+  color: #001EC7; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: 700; 
+}
+
+.contact-details { 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.contact-name { 
+  font-size: 14px; 
+  font-weight: 600; 
+  color: #0f172a; 
+}
+
+.contact-number { 
+  font-size: 12px; 
+  color: #64748b; 
+}
+
+.action-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-circle-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+.call-action-bg {
+  background: #e0e7ff;
+}
+
+.sms-action-bg {
+  background: #dbeafe;
+}
+
+.empty-state { 
+  color: #94a3b8; 
+  text-align: center; 
+  margin-top: 40px; 
+  font-size: 14px; 
+}
+
+/* MESSAGING / CHAT SECTION */
 .sms-thread-list {
-  flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  background: #f8fafc;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
 }
 
 .chat-contact-bar {
-  flex-shrink: 0;
+  background: #001EC7;
+  color: #ffffff;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 24px;
-  border-bottom: 1px solid #f1f5f9;
 }
 
-.chat-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #001EC7;
+.chat-avatar { 
+  width: 34px; 
+  height: 34px; 
+  background: rgba(255, 255, 255, 0.2); 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: 600; 
   color: #ffffff;
-  font-weight: 700;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
-.chat-user-info {
-  display: flex;
-  flex-direction: column;
+.chat-user-info { 
+  display: flex; 
+  flex-direction: column; 
 }
 
-.chat-user-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #0f172a;
+.chat-user-name { 
+  font-size: 13px; 
+  font-weight: 600; 
 }
 
-.chat-user-status {
-  font-size: 12px;
-  color: #94a3b8;
+.chat-user-status { 
+  font-size: 10px; 
+  opacity: 0.85; 
 }
 
 .whatsapp-messages-container {
-  flex: 1;
-  min-height: 0;
+  flex-grow: 1;
+  padding: 12px;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 16px 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: #f8fafc;
 }
 
 .msg-bubble {
-  max-width: 78%;
-  padding: 10px 14px;
-  border-radius: 16px;
-  font-size: 14px;
-  line-height: 1.4;
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13px;
   position: relative;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
 }
 
 .msg-bubble.received {
-  align-self: flex-start;
   background: #ffffff;
-  border: 1px solid #eef1f5;
-  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  border-top-left-radius: 2px;
   color: #0f172a;
+  border: 1px solid #e2e8f0;
 }
 
 .msg-bubble.sent {
+  background: #e0e7ff; 
   align-self: flex-end;
-  background: #001EC7;
-  color: #ffffff;
-  border-bottom-right-radius: 4px;
+  border-top-right-radius: 2px;
+  color: #001EC7;
+  font-weight: 500;
+  border: 1px solid #c7d2fe;
 }
 
 .msg-time {
-  display: block;
-  font-size: 10px;
+  font-size: 9px;
+  color: #64748b;
+  align-self: flex-end;
   margin-top: 4px;
-  opacity: 0.55;
 }
 
 .chat-input-bar {
-  flex-shrink: 0;
+  background: #ffffff;
+  padding: 8px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 24px max(12px, env(safe-area-inset-bottom));
-  border-top: 1px solid #f1f5f9;
-  background: #ffffff;
+  gap: 8px;
+  border-top: 1px solid #e2e8f0;
 }
 
 .chat-input-bar input {
-  flex: 1;
-  min-width: 0;
+  flex-grow: 1;
   border: 1px solid #e2e8f0;
+  padding: 8px 12px;
   border-radius: 20px;
-  padding: 10px 16px;
-  font-size: 14px;
   outline: none;
+  font-size: 13px;
+}
+
+.chat-input-bar input:focus {
+  border-color: #001EC7;
 }
 
 .send-chat-btn {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: none;
   background: #001EC7;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
-/* ==========================================================================
-   PAGE 4 — Contacts
-   ========================================================================== */
-.import-contacts-btn {
-  flex-shrink: 0;
-  border: none;
-  background: #eef1f5;
-  color: #001EC7;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.contacts-list {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-/* ==========================================================================
-   Bottom Navigation Bar
-   ========================================================================== */
+/* BOTTOM NAVIGATION BAR */
 .bottom-nav-bar {
-  flex-shrink: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid #f1f5f9;
-  padding: 10px 0 max(12px, env(safe-area-inset-bottom)) 0;
+  padding-top: 8px;
+  padding-bottom: env(safe-area-inset-bottom, 4px);
   background: #ffffff;
 }
 
 .nav-tab {
+  background: none;
   border: none;
-  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
+  color: #94a3b8;
   font-size: 11px;
   font-weight: 500;
-  color: #94a3b8;
   cursor: pointer;
-  padding: 4px 14px;
-  border-radius: 12px;
 }
 
 .nav-tab.active {
