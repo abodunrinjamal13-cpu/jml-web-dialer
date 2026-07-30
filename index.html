@@ -1,215 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#001EC7">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>JML AGENCY - Web Dialer</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>JML Dialer</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Remixicon for sharp iOS style icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 <body>
 
-  <div class="dialer-card">
+  <div class="app-container">
     
-    <!-- Branding Header -->
-    <div class="brand-header">
-      <div class="logo-row">
-        <svg class="phone-logo-icon" viewBox="0 0 24 24" fill="#001EC7">
-          <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-        </svg>
-        <span class="brand-name">JML AGENCY</span>
+    <!-- TOP STATUS BAR SIMULATION -->
+    <header class="status-bar">
+      <span class="time">9:41</span>
+      <div class="status-icons">
+        <i class="ri-signal-tower-fill"></i>
+        <i class="ri-wifi-line"></i>
+        <i class="ri-battery-fill"></i>
       </div>
-      <div class="brand-sub" id="headerSubTitle">Web Dialer</div>
-    </div>
+    </header>
 
-    <!-- Main Content Container -->
-    <div class="page-container">
-
-      <!-- PAGE 1: DIALER KEYPAD -->
-      <div id="dialerPage" class="app-page active-page">
-        <!-- Display & Paste Input -->
-        <div class="display-box">
-          <input type="text" id="phoneDisplay" placeholder="Enter or paste number..." />
-          <button class="paste-btn" onclick="pasteFromClipboard()" title="Paste from clipboard">
-            <svg viewBox="0 0 24 24" fill="#001EC7" width="20" height="20">
-              <path d="M19 2h-4.18C14.4 0.84 13.3 0 12 0c-1.3 0-2.4 0.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/>
-            </svg>
-          </button>
+    <!-- SCREEN CONTENT CONTAINER -->
+    <main class="main-content">
+      
+      <!-- SCREEN 1: KEYPAD (ACTIVE BY DEFAULT) -->
+      <section id="screen-keypad" class="screen active">
+        <!-- Caller ID Header -->
+        <div class="caller-id-selector">
+          <div class="caller-flag">🇺🇸</div>
+          <div class="caller-info">
+            <span class="caller-number">+1 (347) 555-8921</span>
+            <span class="caller-label">My Caller ID <span class="status-dot"></span> Online</span>
+          </div>
+          <i class="ri-arrow-right-s-line chevron"></i>
         </div>
 
-        <div class="status-badge" id="statusLabel">● Ready to Call</div>
+        <!-- Display Area -->
+        <div class="dialer-display">
+          <input type="text" id="phone-number" placeholder="" readonly />
+          <div class="contact-preview">
+            <span class="contact-name">John Smith</span>
+            <span class="contact-location">New York, USA</span>
+          </div>
+        </div>
 
         <!-- Keypad Grid -->
-        <div id="keypadView">
-          <div class="keypad">
-            <button class="key-btn" onclick="pressKey('1')">1</button>
-            <button class="key-btn" onclick="pressKey('2')">2</button>
-            <button class="key-btn" onclick="pressKey('3')">3</button>
-            <button class="key-btn" onclick="pressKey('4')">4</button>
-            <button class="key-btn" onclick="pressKey('5')">5</button>
-            <button class="key-btn" onclick="pressKey('6')">6</button>
-            <button class="key-btn" onclick="pressKey('7')">7</button>
-            <button class="key-btn" onclick="pressKey('8')">8</button>
-            <button class="key-btn" onclick="pressKey('9')">9</button>
-            <button class="key-btn" onclick="pressKey('*')">*</button>
-            <button class="key-btn" onclick="pressKey('0')">0</button>
-            <button class="key-btn" onclick="pressKey('#')">#</button>
-          </div>
-
-          <div class="bottom-action-row">
-            <button class="call-circle-btn" onclick="startCall()">
-              <svg viewBox="0 0 24 24" fill="#ffffff" width="26" height="26">
-                <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-              </svg>
-            </button>
-            <button class="backspace-icon-btn" onclick="deleteDigit()">
-              <svg viewBox="0 0 24 24" fill="#64748b" width="22" height="22">
-                <path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"/>
-              </svg>
-            </button>
-          </div>
+        <div class="keypad-grid">
+          <button class="key" data-value="1"><span class="num">1</span><span class="sub"></span></button>
+          <button class="key" data-value="2"><span class="num">2</span><span class="sub">ABC</span></button>
+          <button class="key" data-value="3"><span class="num">3</span><span class="sub">DEF</span></button>
+          <button class="key" data-value="4"><span class="num">4</span><span class="sub">GHI</span></button>
+          <button class="key" data-value="5"><span class="num">5</span><span class="sub">JKL</span></button>
+          <button class="key" data-value="6"><span class="num">6</span><span class="sub">MNO</span></button>
+          <button class="key" data-value="7"><span class="num">7</span><span class="sub">PQRS</span></button>
+          <button class="key" data-value="8"><span class="num">8</span><span class="sub">TUV</span></button>
+          <button class="key" data-value="9"><span class="num">9</span><span class="sub">WXYZ</span></button>
+          <button class="key" data-value="*"><span class="num">*</span><span class="sub"></span></button>
+          <button class="key" data-value="0"><span class="num">0</span><span class="sub">+</span></button>
+          <button class="key" data-value="#"><span class="num">#</span><span class="sub"></span></button>
         </div>
 
-        <!-- Active Call Screen -->
-        <div id="activeCallView" class="hidden">
-          <div class="avatar-card">
-            <div class="avatar-circle-inner">
-              <svg viewBox="0 0 24 24" fill="#ffffff" width="42" height="42">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-              </svg>
-            </div>
-            <div class="wave-anchor" id="waveContainer">
-              <div class="ripple-ring ring-1"></div>
-              <div class="ripple-ring ring-2"></div>
-              <div class="ripple-ring ring-3"></div>
-            </div>
-          </div>
-
-          <div id="incallKeypad" class="incall-keypad hidden">
-            <div class="mini-grid">
-              <button onclick="pressKey('1')">1</button>
-              <button onclick="pressKey('2')">2</button>
-              <button onclick="pressKey('3')">3</button>
-              <button onclick="pressKey('4')">4</button>
-              <button onclick="pressKey('5')">5</button>
-              <button onclick="pressKey('6')">6</button>
-              <button onclick="pressKey('7')">7</button>
-              <button onclick="pressKey('8')">8</button>
-              <button onclick="pressKey('9')">9</button>
-              <button onclick="pressKey('*')">*</button>
-              <button onclick="pressKey('0')">0</button>
-              <button onclick="pressKey('#')">#</button>
-            </div>
-          </div>
-
-          <div class="call-controls-wrapper">
-            <div class="controls-top-row">
-              <button class="circle-icon-btn" id="muteBtn" onclick="toggleMute()">
-                <svg viewBox="0 0 24 24" fill="#0f172a" width="20" height="20"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-              </button>
-              <!-- Updated In-Call Keypad Button Icon -->
-              <button class="circle-icon-btn" id="keypadToggleBtn" onclick="toggleInCallKeypad()">
-                <svg viewBox="0 0 24 24" fill="#0f172a" width="20" height="20">
-                  <circle cx="6" cy="6" r="2"/>
-                  <circle cx="12" cy="6" r="2"/>
-                  <circle cx="18" cy="6" r="2"/>
-                  <circle cx="6" cy="12" r="2"/>
-                  <circle cx="12" cy="12" r="2"/>
-                  <circle cx="18" cy="12" r="2"/>
-                  <circle cx="6" cy="18" r="2"/>
-                  <circle cx="12" cy="18" r="2"/>
-                  <circle cx="18" cy="18" r="2"/>
-                </svg>
-              </button>
-              <button class="circle-icon-btn" id="speakerBtn" onclick="toggleSpeaker()">
-                <svg viewBox="0 0 24 24" fill="#0f172a" width="20" height="20"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-              </button>
-            </div>
-            <button class="hangup-circle-btn" onclick="endCall()">
-              <svg viewBox="0 0 24 24" fill="#ffffff" width="26" height="26"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGE 2: CALL LOGS / HISTORY -->
-      <div id="historyPage" class="app-page">
-        <h3 class="section-title">Call History</h3>
-        <div class="full-history-list" id="fullHistoryList"></div>
-      </div>
-
-      <!-- PAGE 3: MESSAGES / SMS CHAT -->
-      <div id="smsPage" class="app-page">
-        <div class="sms-thread-list">
-          <div class="chat-contact-bar">
-            <div class="chat-avatar" id="activeChatAvatar">J</div>
-            <div class="chat-user-info">
-              <span class="chat-user-name" id="activeChatName">JML Support</span>
-              <span class="chat-user-status" id="activeChatNumber">+1 (212) 555-0123</span>
-            </div>
-          </div>
-          <div class="whatsapp-messages-container" id="whatsappMessages">
-            <div class="msg-bubble received">
-              Hello! Thanks for reaching out to JML Agency. How can we help you today?
-              <span class="msg-time">10:42 AM</span>
-            </div>
-          </div>
-          <div class="chat-input-bar">
-            <input type="text" id="chatInputMessage" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendWhatsAppMessage()" />
-            <button class="send-chat-btn" onclick="sendWhatsAppMessage()">
-              <svg viewBox="0 0 24 24" fill="#ffffff" width="16" height="16">
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGE 4: CONTACTS -->
-      <div id="contactsPage" class="app-page">
-        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom:14px;">
-          <h3 class="section-title" style="margin-bottom:0;">Contacts</h3>
-          <button class="import-contacts-btn" onclick="importDeviceContacts()">
-            + Sync Device Contacts
+        <!-- Action Row (Call / Backspace) -->
+        <div class="keypad-actions">
+          <div class="action-spacer"></div>
+          <button class="call-btn" id="make-call-btn">
+            <i class="ri-phone-fill"></i>
+          </button>
+          <button class="backspace-btn" id="delete-btn">
+            <i class="ri-delete-back-2-line"></i>
           </button>
         </div>
-        <div class="contacts-list" id="contactsListContainer"></div>
-      </div>
+      </section>
 
-    </div>
+      <!-- Placeholder Screens for later -->
+      <section id="screen-history" class="screen"><div class="placeholder">History Screen</div></section>
+      <section id="screen-messages" class="screen"><div class="placeholder">Messages Screen</div></section>
+      <section id="screen-contacts" class="screen"><div class="placeholder">Contacts Screen</div></section>
+      <section id="screen-more" class="screen"><div class="placeholder">More & Settings</div></section>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav-bar">
-      <button class="nav-tab active" onclick="switchPage('dialerPage', this)">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <circle cx="6" cy="6" r="2"/>
-          <circle cx="12" cy="6" r="2"/>
-          <circle cx="18" cy="6" r="2"/>
-          <circle cx="6" cy="12" r="2"/>
-          <circle cx="12" cy="12" r="2"/>
-          <circle cx="18" cy="12" r="2"/>
-          <circle cx="6" cy="18" r="2"/>
-          <circle cx="12" cy="18" r="2"/>
-          <circle cx="18" cy="18" r="2"/>
-        </svg>
+    </main>
+
+    <!-- BOTTOM TAB NAVIGATION -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-target="screen-keypad">
+        <i class="ri-grid-fill"></i>
         <span>Keypad</span>
       </button>
-      <button class="nav-tab" onclick="switchPage('historyPage', this)">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+      <button class="nav-item" data-target="screen-history">
+        <i class="ri-history-line"></i>
         <span>History</span>
       </button>
-      <button class="nav-tab" id="smsNavTabBtn" onclick="switchPage('smsPage', this)">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+      <button class="nav-item" data-target="screen-messages">
+        <i class="ri-message-3-line"></i>
         <span>Messages</span>
       </button>
-      <button class="nav-tab" onclick="switchPage('contactsPage', this)">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <button class="nav-item" data-target="screen-contacts">
+        <i class="ri-user-3-line"></i>
         <span>Contacts</span>
       </button>
-    </div>
+      <button class="nav-item" data-target="screen-more">
+        <i class="ri-more-fill"></i>
+        <span>More</span>
+      </button>
+    </nav>
 
   </div>
 
