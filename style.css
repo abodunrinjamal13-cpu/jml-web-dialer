@@ -1,306 +1,589 @@
 /* ==========================================================================
-   Container & Overall Layout
+   Reset & Base
    ========================================================================== */
 * {
-  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   background-color: #0f172a;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   min-height: 100dvh;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+/* ==========================================================================
+   App Shell
+   ========================================================================== */
 .dialer-card {
   width: 100%;
   max-width: 414px;
-  height: 100vh;
   height: 100dvh;
-  max-height: 850px;
+  max-height: 900px;
   background: #ffffff;
   border-radius: 28px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow:
-    0 24px 48px -12px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   position: relative;
-  isolation: isolate;
 }
 
-/* Subtle top sheen so the card reads as a physical device, not a flat div */
-.dialer-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 12%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.page-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: max(20px, env(safe-area-inset-top)) 24px 10px 24px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.page-container::-webkit-scrollbar {
-  display: none;
-}
-
-/* ==========================================================================
-   Header & Phone Number Display
-   ========================================================================== */
-.header-title {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #94a3b8;
-}
-
-.number-display-box {
-  background: #f8fafc;
-  border: 1px solid #eef1f5;
-  border-radius: 18px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 26px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  color: #0f172a;
-  margin-bottom: 8px;
-  min-height: 60px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.number-display-box:focus-within {
-  border-color: #cbd5e1;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
-}
-
-/* ==========================================================================
-   Keypad Grid Polish
-   ========================================================================== */
-.keypad-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px 20px;
-  justify-items: center;
-  align-items: center;
-  margin: 4px 0 0 0;
-  padding: 10px 0;
-}
-
-.keypad-btn {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  border: none;
-  background: #f8fafc;
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.04),
-    inset 0 0 0 1px rgba(15, 23, 42, 0.03);
-  font-size: 25px;
-  font-weight: 600;
-  color: #0f172a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), background 0.12s ease, box-shadow 0.12s ease;
-}
-
-.keypad-btn .sub-letters {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #94a3b8;
-  margin-top: 2px;
-}
-
-.keypad-btn:active {
-  background: #eef1f5;
-  transform: scale(0.94);
-  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06);
-}
-
-@media (hover: hover) {
-  .keypad-btn:hover {
-    background: #f1f5f9;
+/* On an actual phone (narrow viewport) the shell IS the screen — no floating
+   card, no dead margin around it. */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+  .dialer-card {
+    max-height: none;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 
 /* ==========================================================================
-   Action Bar (Call / Delete / Mute)
+   Branding Header
    ========================================================================== */
-.action-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 14px;
-  margin-bottom: max(16px, env(safe-area-inset-bottom));
+.brand-header {
+  flex-shrink: 0;
+  text-align: center;
+  padding: max(18px, env(safe-area-inset-top)) 20px 14px 20px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.call-btn {
-  width: 72px;
-  height: 72px;
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.phone-logo-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #001EC7;
+  letter-spacing: 0.01em;
+}
+
+.brand-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   Page Container & Page Switching
+   ========================================================================== */
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* required so children can scroll instead of overflowing */
+  overflow: hidden;
+}
+
+.app-page {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  padding: 18px 24px 14px 24px;
+}
+
+.app-page.active-page {
+  display: flex;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   PAGE 1 — Dialer / Keypad
+   ========================================================================== */
+.display-box {
+  flex-shrink: 0;
+  background: #f8fafc;
+  border: 1px solid #eef1f5;
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.display-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 20px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #0f172a;
+  width: 100%;
+}
+
+.display-box input::placeholder {
+  font-size: 15px;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.paste-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.status-badge {
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #22c55e;
+  margin-bottom: 6px;
+}
+
+/* keypadView fills all remaining space below the display/status, and
+   internally distributes the grid + call row so nothing floats in a void */
+#keypadView {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 20px;
+  justify-items: center;
+  align-items: center;
+  margin: auto 0;
+  padding: 6px 0;
+}
+
+.key-btn {
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #34d474 0%, #22c55e 100%);
-  color: white;
+  border: none;
+  background: #f1f5f9;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.key-btn:active {
+  background: #e2e8f0;
+  transform: scale(0.94);
+}
+
+.bottom-action-row {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  padding-top: 10px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom) - 8px);
+}
+
+.call-circle-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #22c55e;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 8px 20px -4px rgba(34, 197, 94, 0.45),
-    inset 0 1px 1px rgba(255, 255, 255, 0.35);
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 6px 16px -4px rgba(34, 197, 94, 0.45);
+  transition: transform 0.12s ease;
 }
 
-.call-btn:active {
+.call-circle-btn:active {
   transform: scale(0.94);
-  box-shadow:
-    0 4px 12px -2px rgba(34, 197, 94, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
-.end-call-btn {
-  background: linear-gradient(180deg, #f87171 0%, #ef4444 100%);
-  box-shadow:
-    0 8px 20px -4px rgba(239, 68, 68, 0.45),
-    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+.backspace-icon-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.end-call-btn:active {
-  box-shadow:
-    0 4px 12px -2px rgba(239, 68, 68, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+.backspace-icon-btn:active {
+  background: #f1f5f9;
 }
 
-.secondary-action-btn {
+/* ==========================================================================
+   Active Call View (lives inside dialerPage, toggled via .hidden)
+   ========================================================================== */
+#activeCallView {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0 max(10px, env(safe-area-inset-bottom)) 0;
+}
+
+.avatar-card {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-circle-inner {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #001EC7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.wave-anchor {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 30, 199, 0.35);
+  animation: ripple-out 2.4s ease-out infinite;
+}
+
+.ring-1 { width: 130px; height: 130px; animation-delay: 0s; }
+.ring-2 { width: 130px; height: 130px; animation-delay: 0.6s; }
+.ring-3 { width: 130px; height: 130px; animation-delay: 1.2s; }
+
+@keyframes ripple-out {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.incall-keypad {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 16px;
+  justify-items: center;
+}
+
+.mini-grid button {
   width: 56px;
   height: 56px;
   border-radius: 50%;
   border: none;
   background: #f1f5f9;
-  color: #334155;
+  font-size: 19px;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.mini-grid button:active {
+  background: #e2e8f0;
+}
+
+.call-controls-wrapper {
+  flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.controls-top-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.circle-icon-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.12s ease, transform 0.12s ease;
+  transition: background 0.12s ease;
 }
 
-.secondary-action-btn:active {
+.circle-icon-btn:active {
   background: #e2e8f0;
+}
+
+.circle-icon-btn.is-active {
+  background: #0f172a;
+}
+
+.circle-icon-btn.is-active svg {
+  fill: #ffffff;
+}
+
+.hangup-circle-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -4px rgba(239, 68, 68, 0.45);
+}
+
+.hangup-circle-btn:active {
   transform: scale(0.94);
 }
 
-.secondary-action-btn.is-active {
-  background: #0f172a;
-  color: #ffffff;
+/* ==========================================================================
+   PAGE 2 — Call History
+   ========================================================================== */
+.section-title {
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 14px 0;
+}
+
+.full-history-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 /* ==========================================================================
-   Active Call Screen Redesign
+   PAGE 3 — Messages / SMS
    ========================================================================== */
-.active-call-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+#smsPage {
+  padding: 0;
+}
+
+.sms-thread-list {
   flex: 1;
-  padding: 20px 0;
-}
-
-.call-status-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-  letter-spacing: 0.02em;
-}
-
-.call-duration {
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  color: #22c55e;
-  font-weight: 600;
-  margin-top: 4px;
-}
-
-.avatar-card {
-  width: 100%;
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-  border-radius: 24px;
-  padding: 44px 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
 }
 
-.avatar-circle {
-  width: 104px;
-  height: 104px;
+.chat-contact-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.chat-avatar {
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: linear-gradient(160deg, #3b82f6 0%, #2563eb 100%);
+  background: #001EC7;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-size: 36px;
-  font-weight: 600;
-  box-shadow:
-    0 0 0 8px rgba(37, 99, 235, 0.08),
-    0 0 0 16px rgba(37, 99, 235, 0.04),
-    0 10px 24px -8px rgba(37, 99, 235, 0.5);
+  flex-shrink: 0;
 }
 
-.caller-name {
-  font-size: 20px;
+.chat-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-user-name {
+  font-size: 14px;
   font-weight: 600;
   color: #0f172a;
 }
 
-.caller-number {
-  font-size: 14px;
+.chat-user-status {
+  font-size: 12px;
   color: #94a3b8;
-  font-variant-numeric: tabular-nums;
+}
+
+.whatsapp-messages-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8fafc;
+}
+
+.msg-bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+  position: relative;
+}
+
+.msg-bubble.received {
+  align-self: flex-start;
+  background: #ffffff;
+  border: 1px solid #eef1f5;
+  border-bottom-left-radius: 4px;
+  color: #0f172a;
+}
+
+.msg-bubble.sent {
+  align-self: flex-end;
+  background: #001EC7;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.msg-time {
+  display: block;
+  font-size: 10px;
+  margin-top: 4px;
+  opacity: 0.55;
+}
+
+.chat-input-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+}
+
+.chat-input-bar input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+}
+
+.send-chat-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: #001EC7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 /* ==========================================================================
-   Bottom Nav Bar Fix
+   PAGE 4 — Contacts
+   ========================================================================== */
+.import-contacts-btn {
+  flex-shrink: 0;
+  border: none;
+  background: #eef1f5;
+  color: #001EC7;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.contacts-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ==========================================================================
+   Bottom Navigation Bar
    ========================================================================== */
 .bottom-nav-bar {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid #f1f5f9;
-  padding: 10px 0 max(14px, env(safe-area-inset-bottom)) 0;
+  padding: 10px 0 max(12px, env(safe-area-inset-bottom)) 0;
   background: #ffffff;
 }
 
@@ -310,18 +593,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-size: 11px;
   font-weight: 500;
   color: #94a3b8;
   cursor: pointer;
-  padding: 4px 18px;
+  padding: 4px 14px;
   border-radius: 12px;
-  transition: color 0.15s ease, background 0.15s ease;
 }
 
 .nav-tab.active {
-  color: #2563eb;
+  color: #001EC7;
   font-weight: 600;
-  background: rgba(37, 99, 235, 0.08);
 }
